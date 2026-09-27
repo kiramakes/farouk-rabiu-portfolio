@@ -1,311 +1,186 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Farouk Rabiu</title>
-  <meta name="description" content="Farouk Rabiu — frontend developer. Remote contract work.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.17/dist/lenis.min.js"></script>
-  <script src="https://unpkg.com/@barba/core/dist/barba.umd.js"></script>
-
-  <style>
-    :root {
-      --bg: #f5f5f2;
-      --text: #1d1d1b;
-      --text-secondary: #6e6e6e;
-      --accent: #2d4a77;
-      --line: rgba(29, 29, 27, 0.12);
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
-      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: auto; }
-    body {
-      margin: 0; padding: 0;
-      font-family: var(--font-sans);
-      background: var(--bg); color: var(--text);
-      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
-    }
-    ::selection { background: rgba(45, 74, 119, 0.15); }
-
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; height: auto; }
-
-    /* Layout */
-    .page { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
-    @media (max-width: 768px) { .page { padding: 0 20px; } }
-
-    /* Header */
-    header { position: sticky; top: 0; z-index: 100; background: rgba(245,245,242,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
-    .nav { display: flex; justify-content: space-between; align-items: center; height: 72px; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; }
-    .nav a { color: var(--text-secondary); transition: color .25s; }
-    .nav a:hover { color: var(--text); }
-    .nav .logo { font-family: var(--font-serif); font-size: 22px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
-
-    /* Hero */
-    .hero { min-height: calc(100vh - 72px); display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; padding-top: 60px; padding-bottom: 120px; }
-    @media (max-width: 900px) { .hero { grid-template-columns: 1fr; gap: 48px; padding-top: 40px; } }
-    .hero h1 { font-family: var(--font-serif); font-size: clamp(48px, 7vw, 96px); line-height: 0.92; letter-spacing: -0.03em; font-weight: 600; margin: 0 0 24px; }
-    .hero h1 em { font-style: italic; color: var(--accent); }
-    .hero .subtitle { font-size: 15px; line-height: 1.6; color: var(--text-secondary); max-width: 400px; }
-    .hero .cta { display: inline-block; margin-top: 28px; padding: 12px 28px; border: 1px solid var(--line); border-radius: 40px; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; transition: background .2s, color .2s; }
-    .hero .cta:hover { background: var(--text); color: var(--bg); }
-    .hero-visual { position: relative; aspect-ratio: 4/5; overflow: hidden; border-radius: 16px; background: linear-gradient(135deg, #e8e8e4 0%, #d9d9d6 100%); }
-    .hero-visual img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; filter: grayscale(0.3) contrast(1.05); mix-blend-mode: multiply; }
-    .hero-visual::before { content:""; position:absolute; inset:0; background: radial-gradient(circle at 30% 30%, rgba(45,74,119,0.08), transparent 60%); pointer-events:none; z-index:1; }
-
-    /* Sections */
-    section { padding: 120px 0; border-top: 1px solid var(--line); }
-    section:first-of-type { border-top: none; }
-    .label { font-family: var(--font-sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
-    h2 { font-family: var(--font-serif); font-size: clamp(32px, 4.5vw, 60px); line-height: 1.05; letter-spacing: -0.03em; margin: 0; font-weight: 600; }
-
-    /* About */
-    .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 80px; align-items: start; }
-    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; gap: 40px; } }
-    .about-text p { font-size: 17px; line-height: 1.7; color: var(--text); }
-    .bracket-heading { display: inline-flex; gap: 12px; align-items: center; font-family: var(--font-sans); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--accent); margin-bottom: 20px; }
-    .bracket-heading::before, .bracket-heading::after { content: "["; font-family: var(--font-serif); font-size: 24px; color: var(--accent); line-height: 0; }
-
-    /* Services */
-    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-    @media (max-width: 768px) { .services-grid { grid-template-columns: 1fr; } }
-    .service-card { border: 1px solid var(--line); border-radius: 20px; padding: 36px; transition: border-color .3s, transform .3s; }
-    .service-card:hover { border-color: rgba(45,74,119,0.25); transform: translateY(-4px); }
-    .service-card h3 { font-family: var(--font-serif); font-size: 24px; margin: 0 0 14px; font-weight: 600; letter-spacing: -0.02em; }
-    .service-card p { font-size: 14px; line-height: 1.65; color: var(--text-secondary); margin: 0; }
-
-    /* Projects */
-    .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
-    @media (max-width: 768px) { .projects-grid { grid-template-columns: 1fr; } }
-    .project-card { border-radius: 20px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
-    .project-card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; filter: grayscale(0.15) contrast(1.02); }
-    .project-info { padding: 24px 28px; }
-    .project-info h4 { font-family: var(--font-serif); font-size: 22px; margin: 0 0 8px; letter-spacing: -0.02em; }
-    .project-info span { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
-    .project-info p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin-top: 10px; }
-
-    /* Contact */
-    .contact-block { display: flex; justify-content: space-between; align-items: flex-end; gap: 60px; flex-wrap: wrap; }
-    .contact-block h2 { flex: 1 1 50%; }
-    .contact-block .info { font-size: 15px; line-height: 1.7; color: var(--text-secondary); }
-    .contact-block .info a { color: var(--text); border-bottom: 1px solid var(--line); transition: border-color .2s; }
-    .contact-block .info a:hover { border-bottom-color: var(--accent); }
-
-    /* Footer */
-    footer { padding: 48px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-size: 12px; letter-spacing: 0.06em; color: var(--text-secondary); }
-    @media (max-width: 768px) { footer { flex-direction: column; gap: 12px; text-align: center; } }
-
-    /* Small animation helper classes (used by inline script) */
-    .reveal-up { opacity: 0; transform: translateY(16px); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farouk Rabiu</title>
+<meta name="description" content="Farouk Rabiu — frontend developer. Remote contract work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.17/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/@barba/core/dist/barba.umd.js"></script>
+<style>
+:root{--bg:#0a0a0c;--surface:#121218;--text:#f0f0ee;--text-dim:#6b6b73;--accent:#c7b07a;--line:rgba(255,255,255,0.06);--font-s:'Cormorant Garamond',Georgia,serif;--font-b:'Inter',system-ui,sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{font-family:var(--font-b);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;letter-spacing:-0.01em}
+::selection{background:rgba(199,176,122,0.2)}
+a{color:inherit;text-decoration:none}
+.page{max-width:1400px;margin:0 auto;padding:0 60px}
+@media(max-width:900px){.page{padding:0 24px}}
+/* Magnetic cursor */
+.cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transition:transform .15s ease-out;transform:translate(-50%,-50%) scale(1)}
+.cursor-ring{position:fixed;top:0;left:0;width:32px;height:32px;border:1px solid rgba(199,176,122,0.35);border-radius:50%;pointer-events:none;z-index:99998;transition:transform .25s ease-out,border-color .3s;transform:translate(-50%,-50%)}
+/* Minimal sticky nav — no header section, just nav */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,10,12,0.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;height:80px;padding:0 60px;max-width:1400px;margin:0 auto;font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:600;color:var(--text-dim)}
+@media(max-width:900px){.nav-inner{padding:0 24px;height:64px}}
+.nav-inner a{color:var(--text-dim);transition:color .25s}
+.nav-inner a:hover{color:var(--text)}
+/* Hero — very heavy spacing, large serif, dark bg, no subtitle text */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:140px 60px 200px;position:relative}
+@media(max-width:900px){.hero{padding:100px 24px 120px}}
+.hero h1{font-family:var(--font-s);font-size:clamp(52px,12vw,180px);line-height:.88;letter-spacing:-.04em;font-weight:300;color:var(--text);margin:0 0 60px}
+.hero h1 em{font-style:italic;color:var(--accent);font-weight:400}
+.hero .cta-row{display:flex;gap:24px;margin-top:48px;flex-wrap:wrap}
+/* CTA buttons: Schedule a Call (cal link), Get a Quote (WhatsApp) */
+.cta{display:inline-flex;align-items:center;gap:12px;padding:16px 36px;border:1px solid var(--line);border-radius:100px;font-size:12px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;transition:background .25s,border-color .25s,color .25s;position:relative;overflow:hidden;background:var(--surface);color:var(--text)}
+.cta:hover{background:var(--accent);border-color:var(--accent);color:#0a0a0c}
+.cta::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.12) 50%,transparent 70%);transform:translateX(-100%);transition:transform .6s ease;pointer-events:none;z-index:0}
+.cta:hover::after{transform:translateX(100%)}
+/* Services — large cards with heavy spacing */
+.services{padding:200px 60px;border-top:1px solid var(--line)}
+@media(max-width:900px){.services{padding:120px 24px}}
+.services h2{font-family:var(--font-s);font-size:clamp(40px,6vw,80px);line-height:1;font-weight:300;letter-spacing:-.03em;margin-bottom:80px}
+.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+@media(max-width:900px){.service-grid{grid-template-columns:1fr}}
+.service-card{border:1px solid var(--line);border-radius:24px;padding:48px 36px;background:rgba(255,255,255,0.015);transition:transform .3s ease,border-color .3s;position:relative;overflow:hidden}
+.service-card:hover{transform:translateY(-8px);border-color:rgba(199,176,122,0.3)}
+.service-card h3{font-family:var(--font-s);font-size:28px;font-weight:500;letter-spacing:-.02em;margin-bottom:20px;color:var(--text)}
+.service-card p{font-size:15px;line-height:1.7;color:var(--text-dim)}
+/* Projects — floating orbit effect */
+.projects{padding:200px 60px;border-top:1px solid var(--line)}
+@media(max-width:900px){.projects{padding:120px 24px}}
+.project-orbit{display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center}
+@media(max-width:900px){.project-orbit{grid-template-columns:1fr;gap:48px}}
+.project-orbit-info h3{font-family:var(--font-s);font-size:clamp(32px,5vw,56px);line-height:1.05;letter-spacing:-.03em;font-weight:300;margin-bottom:16px}
+.project-orbit-info .label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:8px}
+.project-orbit-info p{font-size:15px;line-height:1.75;color:var(--text-dim);max-width:420px}
+.project-orbit-visual{aspect-ratio:4/5;border-radius:20px;overflow:hidden;border:1px solid var(--line);position:relative;background:#121218}
+.project-orbit-visual img{width:100%;height:100%;object-fit:cover;filter:grayscale(.2) contrast(1.05);opacity:.85;transition:transform 1.2s ease;transform:scale(1.05)}
+.project-orbit-visual:hover img{transform:scale(1)}
+/* Magnetic button */
+.magnetic{display:inline-block;transition:transform .25s ease-out;transform-origin:center;will-change:transform}
+/* Footer — minimal, professional */
+footer{padding:80px 60px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--text-dim);letter-spacing:.08em}
+@media(max-width:900px){footer{flex-direction:column;gap:16px;text-align:center;padding:60px 24px}}
+/* Heavy scroll reveal */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.22,.61,.36,1),transform 1s cubic-bezier(.22,.61,.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
 </head>
-
-<body data-barba="wrapper">
-  <header role="banner">
-    <nav class="nav page" aria-label="Primary">
-      <a href="#hero" class="logo" aria-label="Farouk Rabiu home">Farouk Rabiu</a>
-      <div>
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+<body>
+<div class="cursor-dot" id="dot"></div>
+<div class="cursor-ring" id="ring"></div>
+<header>
+  <nav class="nav-inner page" aria-label="Primary">
+    <a href="#hero" aria-label="Farouk Rabiu home" style="font-family:var(--font-s);font-size:24px;font-weight:600;color:var(--text);letter-spacing:-.02em">Farouk Rabiu</a>
+    <div style="display:flex;gap:28px;align-items:center">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+<main>
+  <!-- Hero: no subtitle, heavy spacing, Schedule/Get Quote CTAs -->
+  <section id="hero" class="hero page" aria-label="Introduction">
+    <div>
+      <h1>Creative <em>development</em></h1>
+      <div class="cta-row">
+        <a class="cta magnetic" href="https://cal.com/faroukrabiu/30min" target="_blank" rel="noopener noreferrer">Schedule a Call</a>
+        <a class="cta magnetic" href="https://wa.me/2348074548025" target="_blank" rel="noopener noreferrer">Get a Quote</a>
       </div>
-    </nav>
-  </header>
-
-  <main>
-    <!-- Hero -->
-    <section id="hero" class="hero page" aria-label="Introduction">
-      <div>
-        <h1>Creative <em>development</em></h1>
-        <div class="cta-row">
-          <a class="cta magnetic" href="https://cal.com/faroukrabiu/30min" target="_blank" rel="noopener noreferrer">Schedule a Call</a>
-          <a class="cta magnetic" href="https://wa.me/2348074548025" target="_blank" rel="noopener noreferrer">Get a Quote</a>
-        </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <img src="images/hero-abstract.jpg" alt="Abstract color gradient" loading="eager">
+    </div>
+  </section>
+  <!-- Projects: floating effect (orbit carousel) — the "particular floating website" effect -->
+  <section id="projects" class="projects page reveal" aria-label="Selected work">
+    <h2>Selected Work</h2>
+    <div class="project-orbit">
+      <div class="project-orbit-info">
+        <div class="label">Project 01</div>
+        <h3>Animation Portfolio</h3>
+        <p>A motion-driven portfolio site using GSAP scroll animations, smooth scroll, and editorial typography.</p>
       </div>
-      <div class="hero-visual" aria-hidden="true">
-        <img src="images/hero-abstract.jpg" alt="Abstract color gradient" loading="eager">
+      <div class="project-orbit-visual" aria-hidden="true">
+        <img src="images/project-1.jpg" alt="Animation portfolio site" loading="lazy">
       </div>
-    </section>
-
-    <!-- About -->
-    <section id="about" aria-label="About">
-      <div class="page about-grid">
-        <div>
-          <h2>About</h2>
-          <p class="bracket-heading">[Profile]</p>
-        </div>
-        <div class="about-text">
-          <p>I specialize in creating immersive web experiences where motion design, clean code, and user-centered design intersect. My work combines GSAP animations, responsive layouts, and modern JavaScript to deliver interfaces that feel fast, deliberate, and visually engaging.</p>
-          <p>I work remotely on contract and freelance projects — from creative portfolio sites to interactive product interfaces. Currently available for new work at $65/hour or $1,500/project.</p>
-        </div>
+    </div>
+    <div class="project-orbit" style="margin-top:120px">
+      <div class="project-orbit-info">
+        <div class="label">Project 02</div>
+        <h3>Interactive Landing</h3>
+        <p>Interactive landing experience with scroll-triggered reveals and structured layout.</p>
       </div>
-    </section>
-
-    <!-- Services -->
-    <section id="services" aria-label="Services">
-      <div class="page">
-        <h2>Services</h2>
-        <p class="bracket-heading">[What I do]</p>
-        <div class="services-grid">
-          <article class="service-card">
-            <h3>Creative Development</h3>
-            <p>Animation-rich interfaces using GSAP, ScrollTrigger, and interactive motion. Custom effects, smooth scroll, and dynamic layouts.</p>
-          </article>
-          <article class="service-card">
-            <h3>UI / UX Design</h3>
-            <p>Clean, editorial design systems with serif typography, warm palettes, and structured layouts. Prototype to production.</p>
-          </article>
-          <article class="service-card">
-            <h3>Performance</h3>
-            <p>Fast load times, optimized assets, and responsive performance across devices. AVIF/PNG conversion, lazy loading, and clean architecture.</p>
-          </article>
-        </div>
+      <div class="project-orbit-visual" aria-hidden="true">
+        <img src="images/project-2.jpg" alt="Interactive landing page" loading="lazy">
       </div>
-    </section>
-
-    <!-- Projects -->
-    <section id="projects" aria-label="Selected work">
-      <div class="page">
-        <h2>Selected Work</h2>
-        <p class="bracket-heading">[Portfolio]</p>
-        <div class="projects-grid">
-          <article class="project-card">
-            <img src="images/project-1.jpg" alt="Animation portfolio site" loading="lazy">
-            <div class="project-info">
-              <h4>Creative Portfolio</h4>
-              <span>Frontend / Animation</span>
-              <p>A motion-driven portfolio with GSAP scroll animations, custom SVG effects, and responsive editorial design.</p>
-            </div>
-          </article>
-          <article class="project-card">
-            <img src="images/project-2.jpg" alt="Interactive landing page" loading="lazy">
-            <div class="project-info">
-              <h4>Landing Experience</h4>
-              <span>UI / UX</span>
-              <p>Interactive landing page with scroll-triggered reveals, gradient text effects, and smooth navigation.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" aria-label="Contact">
-      <div class="page contact-block">
-        <h2>Let's work together.</h2>
-        <div class="info">
-          <p>Email: <a href="mailto:faroukrabiu123@gmail.com">faroukrabiu123@gmail.com</a></p>
-          <p>Rate: $65/hr or $1,500/project (contract / remote)</p>
-          <p>Currently available. Replies within 24 hours.</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer role="contentinfo">
-    <p>Farouk Rabiu — Creative Frontend Developer</p>
-    <p>Built with GSAP · Lenis · Barba</p>
-  </footer>
-
-  <script>
-    // Barba page transitions (core effect — must initialize)
-    barba.init({
-      transitions: [{ name: 'default', leave: () => {}, enter: () => {}, once: () => {} }],
-      preventRunning: false
-    });
-    barba.hooks.afterEnter(({ next }) => { lenis.resize(); lenis.start(); ScrollTrigger.refresh(); });
-
-    // Lenis smooth scroll
-    const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-    lenis.on('scroll', () => { ScrollTrigger.refresh(); });
-    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-    gsap.ticker.lagSmoothing(0);
-
-    // Hero animation: split text reveal
-    gsap.from('.hero h1', { yPercent: 30, opacity: 0, duration: 1, ease: 'power4.out', delay: 0.15 });
-    gsap.from('.hero .subtitle', { yPercent: 15, opacity: 0, duration: 0.9, ease: 'power4.out', delay: 0.4 });
-    gsap.from('.hero .cta', { yPercent: 10, opacity: 0, duration: 0.7, ease: 'power2.out', delay: 0.6 });
-
-    // Section reveal animations (one-pass, verified with scroll)
-    document.querySelectorAll('section:not(#hero)').forEach((el) => {
-      gsap.from(el.querySelector('h2'), { yPercent: 20, opacity: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 80%', toggleActions: 'play none none none' } });
-      gsap.from(el.querySelector('.bracket-heading'), { yPercent: 15, opacity: 0, duration: 0.7, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 80%', toggleActions: 'play none none none' } });
-    });
-
-    // Service cards stagger reveal
-    gsap.from('.service-card', { yPercent: 12, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out', scrollTrigger: { trigger: '#services', start: 'top 75%' } });
-
-    // Project cards reveal
-    gsap.from('.project-card', { yPercent: 16, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out', scrollTrigger: { trigger: '#projects', start: 'top 75%' } });
-
-    // Heavy scroll reveal — every element
-    document.querySelectorAll('.reveal').forEach(el => {
-      gsap.fromTo(el, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' } });
-    });
-    // Orbit carousel (project cards with data-index)
-    const orbitCards = document.querySelectorAll('[data-index]');
-    if (orbitCards.length > 0) {
-      let current = 0;
-      function updateOrbit(i) {
-        current = (i + orbitCards.length) % orbitCards.length;
-        orbitCards.forEach((c, idx) => {
-          c.style.opacity = (idx === current ? '1' : '0');
-          c.style.transform = (idx === current ? 'scale(1)' : 'scale(0.95)');
-        });
-      }
-      updateOrbit(0);
-      document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowRight') updateOrbit(current + 1);
-        if (e.key === 'ArrowLeft') updateOrbit(current - 1);
-      });
-    }
-
-    // Magnetic cursor (heavy effect on every interaction)
-    const dot = document.getElementById('dot'), ring = document.getElementById('ring');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animateCursor() {
-      rx += (mx - rx) * 0.15;
-      ry += (my - ry) * 0.15;
-      dot.style.transform = `translate(${rx - 4}px, ${ry - 4}px)`;
-      ring.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`;
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    // Magnetic buttons
-    document.querySelectorAll('.magnetic').forEach(btn => {
-      btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
-        const cx = r.left + r.width / 2;
-        const cy = r.top + r.height / 2;
-        const dx = e.clientX - cx;
-        const dy = e.clientY - cy;
-        btn.style.transform = `translate(${dx * 0.15}px, ${dy * 0.15}px) scale(1.02)`;
-      });
-      btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0) scale(1)'; });
-    });
-
-    // SVG Mask Button effect (button-007 style — like alejandroha)
-    document.querySelectorAll('.cta').forEach(btn => {
-      btn.innerHTML += '<span style="position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.12) 50%,transparent 70%);pointer-events:none;transform:translateX(-100%);transition:transform .5s ease;z-index:0;" class="cta-shine"></span>';
-      btn.addEventListener('mouseenter', () => {
-        const s = btn.querySelector('.cta-shine');
-        if (s) s.style.transform = 'translateX(100%)';
-      });
-      btn.addEventListener('mouseleave', () => {
-        const s = btn.querySelector('.cta-shine');
-        if (s) s.style.transform = 'translateX(-100%)';
-      });
-    });
-  </script>
+    </div>
+  </section>
+  <!-- Contact -->
+  <section id="contact" class="contact page reveal" aria-label="Contact" style="padding-top:200px;padding-bottom:160px">
+    <h2>Let's work together.</h2>
+    <div style="display:flex;gap:40px;flex-wrap:wrap;margin-top:48px">
+      <a class="cta magnetic" href="https://cal.com/faroukrabiu/30min" target="_blank" rel="noopener noreferrer">Schedule a Call</a>
+      <a class="cta magnetic" href="https://wa.me/2348074548025" target="_blank" rel="noopener noreferrer">Get a Quote — +234 807 454 8025</a>
+    </div>
+    <p style="margin-top:48px;font-size:13px;color:var(--text-dim);letter-spacing:.06em">faroukrabiu123@gmail.com · Remote contract · Available now</p>
+  </section>
+</main>
+<footer style="padding:80px 60px;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);letter-spacing:.08em">
+  <p>Farouk Rabiu — Creative Frontend Developer</p>
+  <p>Built with GSAP · Lenis · Barba</p>
+</footer>
+<script>
+/* Barba page transitions (core effect) */
+barba.init({
+  transitions: [{ name: 'default', leave: ()=>{}, enter: ()=>{}, once: ()=>{} }],
+  preventRunning: false
+});
+barba.hooks.afterEnter(({next})=>{lenis.resize();lenis.start();ScrollTrigger.refresh();});
+/* Lenis smooth scroll */
+const lenis = new Lenis({duration:1.2,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t))});
+lenis.on('scroll',()=>ScrollTrigger.refresh());
+gsap.ticker.add(t=>lenis.raf(t*1000));
+gsap.ticker.lagSmoothing(0);
+/* Magnetic cursor (heavy effect) */
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+function animateCursor(){rx+=(mx-rx)*.15;ry+=(my-ry)*.15;dot.style.transform=`translate(${rx-4}px,${ry-4}px)`;ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;requestAnimationFrame(animateCursor);}
+animateCursor();
+/* Magnetic buttons */
+document.querySelectorAll('.magnetic').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect();
+    const cx=r.left+r.width/2;const cy=r.top+r.height/2;
+    btn.style.transform=`translate(${(e.clientX-cx)*.15}px,${(e.clientY-cy)*.15}px) scale(1.02)`;
+  });
+  btn.addEventListener('mouseleave',()=>{btn.style.transform='translate(0,0) scale(1)';});
+});
+/* SVG button shine effect (button-007 style) */
+document.querySelectorAll('.cta').forEach(btn=>{
+  btn.insertAdjacentHTML('afterbegin','<span style="position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.12) 50%,transparent 70%);pointer-events:none;transform:translateX(-100%);transition:transform .5s ease;z-index:0;" class="cta-shine"></span>');
+  btn.addEventListener('mouseenter',()=>{
+    const s=btn.querySelector('.cta-shine');if(s)s.style.transform='translateX(100%)';
+  });
+  btn.addEventListener('mouseleave',()=>{
+    const s=btn.querySelector('.cta-shine');if(s)s.style.transform='translateX(-100%)';
+  });
+});
+/* Heavy scroll reveals */
+gsap.utils.toArray('.reveal').forEach(el=>{
+  gsap.fromTo(el,{opacity:0,y:60},{opacity:1,y:0,duration:1.1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 85%',toggleActions:'play none none none'}});
+});
+/* Hero entrance */
+gsap.from('.hero h1',{yPercent:30,opacity:0,duration:1.2,ease:'power4.out',delay:.1});
+gsap.from('.hero .cta-row',{yPercent:20,opacity:0,duration:1,ease:'power3.out',delay:.5});
+</script>
 </body>
 </html>
