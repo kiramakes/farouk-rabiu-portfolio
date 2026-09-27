@@ -99,6 +99,9 @@ footer{padding:48px 0;border-top:1px solid var(--line);display:flex;justify-cont
 @media(max-width:768px){footer{flex-direction:column;gap:12px;text-align:center}}
 /* Magnetic button */
 .magnetic{display:inline-block;transition:transform .25s ease-out;transform-origin:center;will-change:transform}
+/* Magnetic cursor */
+.cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:99999;mix-blend-mode:difference;transition:transform .15s ease-out;transform:translate(-50%,-50%) scale(1)}
+.cursor-ring{position:fixed;top:0;left:0;width:32px;height:32px;border:1px solid rgba(45,74,119,0.35);border-radius:50%;pointer-events:none;z-index:99998;transition:transform .25s ease-out,border-color .3s;transform:translate(-50%,-50%)}
 /* Heavy scroll reveal */
 .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.22,.61,.36,1),transform 1s cubic-bezier(.22,.61,.36,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
@@ -127,9 +130,10 @@ footer{padding:48px 0;border-top:1px solid var(--line);display:flex;justify-cont
   <section id="hero" class="hero page" aria-label="Introduction">
     <div>
       <h1>Creative <em>development</em></h1>
-      <p class="subtitle">Modern, functional, custom-built sites with animations that make a difference.</p>
+
       <div class="cta-row">
-        <a class="cta magnetic" href="#contact">Start</a>
+        <a class="cta magnetic" href="https://cal.com/faroukrabiu/30min" target="_blank" rel="noopener noreferrer">Schedule a Call</a>
+        <a class="cta magnetic" href="https://wa.me/2348074548025" target="_blank" rel="noopener noreferrer">Get a Quote</a>
       </div>
     </div>
     <div class="hero-visual" aria-hidden="true">
