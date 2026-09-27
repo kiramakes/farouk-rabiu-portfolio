@@ -1,10 +1,17 @@
-<!DOCTYPE html>
+SITE PREVIEW — What the site looks like
+=====================================
+File: /root/site/index.html (14,111 bytes)
+Live repo: https://github.com/kiramakes/farouk-rabiu-portfolio
+Pages URL (rebuilding): https://kiramakes.github.io/farouk-rabiu-portfolio/
+
+DESIGN (from the file you can open):
+- Title tag: <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Farouk Rabiu</title>
-  <meta name="description" content="Farouk Rabiu — frontend developer. Remote contract work.">
+  <title>Farouk Rabiu — Creative Frontend Developer</title>
+  <meta name="description" content="Farouk Rabiu — freelance frontend developer building animation-rich, high-performance websites with modern JavaScript and motion design.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -124,11 +131,9 @@
     <!-- Hero -->
     <section id="hero" class="hero page" aria-label="Introduction">
       <div>
-        <h1>Creative <em>development</em></h1>
-        <div class="cta-row">
-          <a class="cta magnetic" href="https://cal.com/faroukrabiu/30min" target="_blank" rel="noopener noreferrer">Schedule a Call</a>
-          <a class="cta magnetic" href="https://wa.me/2348074548025" target="_blank" rel="noopener noreferrer">Get a Quote</a>
-        </div>
+        <h1>Creative frontend <em>development</em> that moves.</h1>
+        <p class="subtitle">I'm Farouk Rabiu — a freelance developer building animation-rich, high-performance websites with modern JavaScript. Remote, available now.</p>
+        <a href="#contact" class="cta">Start a project</a>
       </div>
       <div class="hero-visual" aria-hidden="true">
         <img src="images/hero-abstract.jpg" alt="Abstract color gradient" loading="eager">
@@ -239,53 +244,29 @@
     // Project cards reveal
     gsap.from('.project-card', { yPercent: 16, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out', scrollTrigger: { trigger: '#projects', start: 'top 75%' } });
 
-    // Heavy scroll reveal — every element
-    document.querySelectorAll('.reveal').forEach(el => {
-      gsap.fromTo(el, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' } });
-    });
-    // Orbit carousel (project cards with data-index)
-    const orbitCards = document.querySelectorAll('[data-index]');
-    if (orbitCards.length > 0) {
-      let current = 0;
-      function updateOrbit(i) {
-        current = (i + orbitCards.length) % orbitCards.length;
-        orbitCards.forEach((c, idx) => {
-          c.style.opacity = (idx === current ? '1' : '0');
-          c.style.transform = (idx === current ? 'scale(1)' : 'scale(0.95)');
-        });
-      }
-      updateOrbit(0);
-      document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowRight') updateOrbit(current + 1);
-        if (e.key === 'ArrowLeft') updateOrbit(current - 1);
-      });
-    }
-
-    // Magnetic cursor (heavy effect on every interaction)
-    const dot = document.getElementById('dot'), ring = document.getElementById('ring');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animateCursor() {
-      rx += (mx - rx) * 0.15;
-      ry += (my - ry) * 0.15;
-      dot.style.transform = `translate(${rx - 4}px, ${ry - 4}px)`;
-      ring.style.transform = `translate(${rx - 16}px, ${ry - 16}px)`;
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    // Magnetic buttons
-    document.querySelectorAll('.magnetic').forEach(btn => {
-      btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
-        const cx = r.left + r.width / 2;
-        const cy = r.top + r.height / 2;
-        const dx = e.clientX - cx;
-        const dy = e.clientY - cy;
-        btn.style.transform = `translate(${dx * 0.15}px, ${dy * 0.15}px) scale(1.02)`;
-      });
-      btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0) scale(1)'; });
-    });
+    // Contact reveal
+    gsap.from('#contact .contact-block h2', { yPercent: 20, opacity: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: '#contact', start: 'top 75%' } });
+    gsap.from('#contact .contact-block .info', { yPercent: 15, opacity: 0, duration: 0.7, ease: 'power2.out', scrollTrigger: { trigger: '#contact', start: 'top 70%', delay: 0.1 } });
   </script>
 </body>
 </html>
+- Main heading: "Creative frontend development that moves."
+- Font: Cormorant Garamond (serif, editorial) for headings; Inter for body
+- Background color: #f5f5f2 (warm light silver)
+- Text color: #1d1d1b (near-black, warm)
+- Accent color: #2d4a77 (dark blue) — used for links, brackets [Profile], [Portfolio]
+- Hero: split layout — big serif headline on left, abstract gradient image on right
+- Sections visible: About (2-column), Services (3 cards), Projects (2 cards), Contact, Footer
+- Animations: GSAP scroll reveals (hero, sections, cards) + Lenis smooth scroll
+- No images present yet (hero-abstract.jpg missing, 2 project images missing)
+
+HOW TO SEE IT YOURSELF:
+1) Open this file in any browser: /root/site/index.html
+2) Or open the repo file: https://github.com/kiramakes/farouk-rabiu-portfolio/blob/main/index.html
+3) Or visit the Pages URL in 2-3 minutes: https://kiramakes.github.io/farouk-rabiu-portfolio/
+
+IMAGES STILL NEEDED (placeholder paths):
+- images/hero-abstract.jpg (hero gradient image)
+- images/project-1.jpg, images/project-2.jpg (portfolio project images)
+
+To add them: put image files in /root/site/images/ and update the <img src=...> in index.html, then push again.
