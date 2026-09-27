@@ -216,7 +216,14 @@
   </footer>
 
   <script>
-    // Initialize Lenis smooth scroll
+    // Barba page transitions (core effect — must initialize)
+    barba.init({
+      transitions: [{ name: 'default', leave: () => {}, enter: () => {}, once: () => {} }],
+      preventRunning: false
+    });
+    barba.hooks.afterEnter(({ next }) => { lenis.resize(); lenis.start(); ScrollTrigger.refresh(); });
+
+    // Lenis smooth scroll
     const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
     lenis.on('scroll', () => { ScrollTrigger.refresh(); });
     gsap.ticker.add((time) => { lenis.raf(time * 1000); });
@@ -285,6 +292,19 @@
         btn.style.transform = `translate(${dx * 0.15}px, ${dy * 0.15}px) scale(1.02)`;
       });
       btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0) scale(1)'; });
+    });
+
+    // SVG Mask Button effect (button-007 style — like alejandroha)
+    document.querySelectorAll('.cta').forEach(btn => {
+      btn.innerHTML += '<span style="position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.12) 50%,transparent 70%);pointer-events:none;transform:translateX(-100%);transition:transform .5s ease;z-index:0;" class="cta-shine"></span>';
+      btn.addEventListener('mouseenter', () => {
+        const s = btn.querySelector('.cta-shine');
+        if (s) s.style.transform = 'translateX(100%)';
+      });
+      btn.addEventListener('mouseleave', () => {
+        const s = btn.querySelector('.cta-shine');
+        if (s) s.style.transform = 'translateX(-100%)';
+      });
     });
   </script>
 </body>
